@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>To You, Anonymously</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="preload" href="styles.css" as="style" onload="this.rel='stylesheet'" />
 </head>
 <body>
   <header>
@@ -36,6 +36,6 @@
 
   <!-- Axios and App Script -->
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.8/dist/axios.min.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js" defer></script>
 </body>
 </html>
