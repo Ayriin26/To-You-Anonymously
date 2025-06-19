@@ -1,42 +1,39 @@
-// ✅ Base API configuration
+// ✅ Axios instance
 const API = window.axios.create({
     baseURL: 'https://to-you-anonymously-backend.onrender.com',
-    headers: {
-      'Content-Type': 'application/json'
-    }
+    headers: { 'Content-Type': 'application/json' }
   });
   
-  // ✅ DOM Elements
+  // ✅ Get DOM elements
   const form = document.getElementById("noteForm");
-  const recipientInput = document.getElementById("recipientName");
   const senderInput = document.getElementById("senderName");
   const messageInput = document.getElementById("message");
   const notesContainer = document.getElementById("notesContainer");
-  const searchInput = document.getElementById("searchInput");
   const addNoteBtn = document.getElementById("addNoteBtn");
   const noteModal = document.getElementById("noteModal");
   const closeModalBtn = document.querySelector(".close");
+  const searchInput = document.getElementById("searchInput");
   
   let notes = [];
   
-  // ✅ Show modal
+  // ✅ Show the modal when ➕ is clicked
   addNoteBtn.addEventListener("click", () => {
     noteModal.style.display = "block";
   });
   
-  // ✅ Hide modal
+  // ✅ Hide the modal when ✖ is clicked
   closeModalBtn.addEventListener("click", () => {
     noteModal.style.display = "none";
   });
   
-  // ✅ Hide modal on outside click
+  // ✅ Hide modal when clicking outside
   window.addEventListener("click", (e) => {
     if (e.target === noteModal) {
       noteModal.style.display = "none";
     }
   });
   
-  // ✅ Axios-based fetch
+  // ✅ Fetch notes from backend
   async function fetchNotes() {
     try {
       const response = await API.get('/api/notes');
@@ -50,90 +47,75 @@ const API = window.axios.create({
     }
   }
   
-  // ✅ Axios-based create
+  // ✅ Create a new note
   async function createNote(noteData) {
     try {
       const response = await API.post('/api/notes', noteData);
       if (response.data.success) {
         notes.unshift(response.data.data);
         displayNotes(notes);
-        return true;
       }
     } catch (error) {
-      const errMsg = error.response?.data?.message || 'Failed to create note';
-      console.error("Error creating note:", errMsg);
-      throw new Error(errMsg);
+      console.error("Error creating note:", error);
+      alert("Error creating note. Please try again.");
     }
   }
   
+  // ✅ Display notes on screen
   function displayNotes(filteredNotes) {
     notesContainer.innerHTML = "";
   
-    if (filteredNotes.length === 0) {
-      notesContainer.innerHTML = `<p class="no-notes">No notes found.</p>`;
+    if (!filteredNotes.length) {
+      notesContainer.innerHTML = "<p class='no-notes'>No notes found.</p>";
       return;
     }
   
     filteredNotes.forEach((note) => {
-      const noteElement = document.createElement("div");
-      noteElement.classList.add("note");
-  
-      const messageElement = document.createElement("p");
-      messageElement.classList.add("message");
-      messageElement.textContent = note.message;
-  
-      const senderElement = document.createElement("p");
-      senderElement.classList.add("sender");
-      senderElement.textContent = note.name
-        ? `— From ${note.name}`
-        : "— From Anonymous";
-  
-      noteElement.appendChild(messageElement);
-      noteElement.appendChild(senderElement);
-      notesContainer.appendChild(noteElement);
+      const div = document.createElement("div");
+      div.className = "note";
+      div.innerHTML = `
+        <p class="message">${note.message}</p>
+        <p class="sender">— From ${note.name || "Anonymous"}</p>
+      `;
+      notesContainer.appendChild(div);
     });
   }
   
-  // ✅ Form submit
+  // ✅ Form submission
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
   
     const noteData = {
-      recipient: recipientInput.value.trim(),
-      message: messageInput.value.trim(),
-      name: senderInput.value.trim()
+      name: senderInput.value.trim(),
+      message: messageInput.value.trim()
     };
   
-    if (!noteData.recipient || !noteData.message) {
-      alert("Recipient and message are required.");
+    if (!noteData.message) {
+      alert("Message is required.");
       return;
     }
   
-    try {
-      await createNote(noteData);
-      recipientInput.value = "";
-      messageInput.value = "";
-      senderInput.value = "";
-      noteModal.style.display = "none";
-    } catch (error) {
-      alert(error.message);
-    }
+    await createNote(noteData);
+    senderInput.value = "";
+    messageInput.value = "";
+    noteModal.style.display = "none";
   });
   
-  // ✅ Search by name or message
+  // ✅ Search functionality
   searchInput.addEventListener("input", () => {
-    const searchTerm = searchInput.value.toLowerCase();
-    const filteredNotes = notes.filter((note) =>
-      (note.name || "").toLowerCase().includes(searchTerm) ||
-      (note.message || "").toLowerCase().includes(searchTerm)
+    const query = searchInput.value.toLowerCase();
+    const filtered = notes.filter((n) =>
+      (n.name || "").toLowerCase().includes(query) ||
+      (n.message || "").toLowerCase().includes(query)
     );
-    displayNotes(filteredNotes);
+    displayNotes(filtered);
   });
   
-  function showError(message) {
-    notesContainer.innerHTML = `<p class="error">${message}</p>`;
+  // ✅ Fallback error message
+  function showError(msg) {
+    notesContainer.innerHTML = `<p class="error">${msg}</p>`;
   }
   
-  // ✅ Initial load
+  // ✅ Load on start
   fetchNotes();
   
