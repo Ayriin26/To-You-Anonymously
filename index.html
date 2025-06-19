@@ -1,73 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Send anonymous, heartfelt notes to your loved ones. Share your thoughts and feelings without revealing your identity.">
-    <meta name="theme-color" content="#f8f9fa">
-    <title>To You, Anonymously</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To You, Anonymously</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">
-                <h1>To You,<br>Anonymously</h1>
-            </div>
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search by name or message...">
-                <i class="fas fa-search"></i>
-            </div>
-        </header>
+  <header>
+    <h1>To You, Anonymously</h1>
+    <input type="text" id="searchInput" placeholder="Search by name..." />
+  </header>
 
-        <main id="notesContainer" class="notes-grid">
-            <div class="empty-state">
-                <i class="fas fa-feather-alt"></i>
-                <h2>Spread Kindness</h2>
-                <p>Be the first to leave a heartfelt note for someone special. Your words might be exactly what they need to hear today.</p>
-            </div>
-        </main>
-
-        <button id="addNoteBtn" class="floating-btn">
-            <i class="fas fa-plus"></i>
-        </button>
+  <main>
+    <div id="notesContainer" class="notes-container">
+      <!-- Notes will be rendered here -->
     </div>
+  </main>
 
-    <!-- Add Note Modal -->
-    <div id="noteModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Send an Anonymous Note</h2>
-            <form id="noteForm">
-                <div class="form-group">
-                    <label for="recipientName">To (Required)</label>
-                    <input type="text" id="recipientName" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Your Message (Required)</label>
-                    <textarea id="message" rows="4" required placeholder="Write something kind..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="senderName">Your Name (Optional)</label>
-                    <input type="text" id="senderName" placeholder="Anonymous">
-                </div>
-                <button type="submit" class="submit-btn">
-                    <i class="far fa-paper-plane"></i> Send Anonymously
-                    <div class="loading-state">
-                        <i class="fas fa-spinner fa-spin"></i>
-                    </div>
-                </button>
-            </form>
-        </div>
+  <!-- ➕ Add Note Button -->
+  <button id="addNoteBtn" class="add-note-button">+</button>
+
+  <!-- Modal Form for Adding Notes -->
+  <div id="noteModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form id="noteForm">
+        <input type="text" id="recipientName" placeholder="Recipient's Name" required />
+        <textarea id="message" placeholder="Write your anonymous message..." required></textarea>
+        <input type="text" id="senderName" placeholder="Your Name (optional)" />
+        <button type="submit">Submit</button>
+      </form>
     </div>
+  </div>
 
-    <!-- Axios CDN -->
-<script src="https://cdn.jsdelivr.net/npm/axios@1.6.8/dist/axios.min.js"></script>
-<!-- Your app script -->
-<script src="app.js"></script>
+  <!-- Axios and App Script -->
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.6.8/dist/axios.min.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
