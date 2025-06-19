@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To You, Anonymously</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>To You, Anonymously</h1>
+    <input type="text" id="searchInput" placeholder="Search by name..." />
+  </header>
+
+  <main>
+    <div id="notesContainer" class="notes-container"></div>
+  </main>
+
+  <button id="addNoteBtn" class="add-note-button">+</button>
+
+  <div id="noteModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form id="noteForm">
+        <textarea id="message" placeholder="Write your message..." required></textarea>
+        <input type="text" id="senderName" placeholder="Your name (optional)" />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.6.8/dist/axios.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
