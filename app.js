@@ -1,8 +1,6 @@
-// ✅ Load Axios via CDN ESM (no bundler needed)
-import axios from 'https://cdn.jsdelivr.net/npm/axios@1.6.8/+esm';
 
 // ✅ Base API configuration
-const API = axios.create({
+const API = window.axios.create({
   baseURL: 'https://to-you-anonymously-backend.onrender.com',
   headers: {
     'Content-Type': 'application/json'
